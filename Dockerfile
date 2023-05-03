@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine
+FROM golang:1.19
 
 WORKDIR /app
 
@@ -7,11 +7,11 @@ COPY go.mod go.sum ./
 
 RUN go mod download
 
-COPY . ./
+COPY *.go ./
 
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./cmd/web/main.go
 
-RUN go build snippetbox.baron.net/cmd/web
 
 EXPOSE 4000
 
-CMD ["/snippetbox"]
+CMD ["/snippetbox.baron.net"]
